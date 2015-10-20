@@ -1,6 +1,23 @@
 'use strict';
 
-app.factory('Post', function(DS) {
+app.factory('Post', function(DS, $state) {
+
+	var Post = DS.defineResource({
+		name: 'post',
+		relations: {
+			belongsTo: {
+				User: {
+					localField: 'user',
+					localKey: 'userId'
+				}
+			}
+		}, 
+		methods: {
+			go: function(state) {
+				$state.go('post', {postId: this._id});
+			}
+		}
+	});
 
 	/*
 
@@ -14,6 +31,6 @@ app.factory('Post', function(DS) {
 
 	*/
 
-});
+}).run(function(Post) {});
 
 
