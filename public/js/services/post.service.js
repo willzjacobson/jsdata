@@ -3,21 +3,28 @@
 app.factory('Post', function(DS, $state) {
 
 	var Post = DS.defineResource({
-		name: 'post',
+		basePath: '/api',
+		idAttribute: '_id',
+		name: 'posts',
 		relations: {
 			belongsTo: {
-				User: {
-					localField: 'user',
-					localKey: 'userId'
+				users: {
+					localField: '_author',
+					localKey: 'author'
 				}
 			}
 		}, 
 		methods: {
-			go: function(state) {
+			go: function() {
 				$state.go('post', {postId: this._id});
 			}
 		}
 	});
+
+	return Post;
+
+}).run(function(Post) {});
+
 
 	/*
 
@@ -30,7 +37,3 @@ app.factory('Post', function(DS, $state) {
 				(HINT: see post.js)
 
 	*/
-
-}).run(function(Post) {});
-
-
